@@ -1,25 +1,33 @@
 import logo from './logo.svg';
 import './App.css';
+import { connect } from 'react-redux'
 
-function App() {
+
+
+function App(props) {
+
   return (
+
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>Age: <span>{props.age}</span></div>
+      <button onClick={props.onAgeUp}>Age UP</button>
+      <button onClick={props.onAgeDown}>Age DOWN</button>
     </div>
+
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    age: state.age,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAgeUp: () => dispatch({ type: 'AGE_UP' }),
+    onAgeDown: () => dispatch({ type: 'AGE_DOWN' }),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
